@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1 style="color: rgb(68, 71, 176);">TypeScript</h1>
+				</section>
+				
+  				<section id="fragments">
+					<h2 style="color: rgb(207, 224, 58);">What is TypeScript?</h2>
+					<p class="fragment">• TypeScript - is a language that is a superset of JavaScript</p>
+					<p class="fragment">• Introduced by Microsoft in 2012 and positioned as a web application development tool that extends the capabilities of JavaScript</p>
+					<p class="fragment">• The developer of the TypeScript language is Anders Hejlsberg</p>						
+				</section>
+
+  				<section>
+					<h2 style="color: rgb(207, 224, 58);">Quick start in Node.Js</h2>
+					<p>• npm install -g typescript (installing TypeScript)</p>
+					<p>• tsc app.ts (compiling app.ts to app.js)</p>
+					<p>• app.js node (app.js file execution)</p>
+						
+				</section>
+
+				<section >
+					<h2 style="color: rgb(207, 224, 58);">TypeScript has the base types:</h2>
+					<ul>
+						<li>Boolean</li>
+						<li>Number</li>
+						<li>Array</li>
+						<li>String</li>
+						<li>Tuple</li>
+						<li>Enum</li>
+						<li>Any</li>
+						<li>Null и undefined</li>
+						<li>Void</li>
+						<li>Never</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title" style="color: rgb(207, 224, 58);">Types by Inference</h2>
+					<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+						let helloWorld = "Hello World"; 
+						// helloWorld: string
+					</code></pre>
+				</section>
+
+				<section>
+					<section data-auto-animate>
+						<h2 data-id="code-title" style="color: rgb(207, 224, 58);">Defining Types</h2>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							interface User {
+								name: string;
+								id: number;
+							}
+
+							const user = {
+								name: "Hayes",
+								id: 0,
+							};
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<p>Use : TypeName after variable declaration:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							const user: User = {
+								name: "Hayes",
+								id: 0,
+							};
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<p>Use an interface declaration with classes:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							interface User {
+								name: string;
+								id: number;
+							}
+							class UserAccount {
+								name: string;
+								id: number;
+
+								constructor(name: string, id: number) {
+									this.name = name;
+									this.id = id;
+								}	
+							}
+							const user: User = new UserAccount("Murphy", 1);
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<p>Use interfaces to annotate parameters and return values to functions:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							function getAdminUser(): User {
+								//...
+							}
+							
+							function deleteUser(user: User) {
+								// ...
+							}
+						</code></pre>
+					</section>	
+				</section>
+
+				<section>
+					<section data-auto-animate>
+						<h2 data-id="code-title" style="color: rgb(207, 224, 58);">Composing Types</h2>
+						<p>• Unions</p>
+						<p>• Generics</p>
+					</section>
+
+					<section data-auto-animate>
+						<p>Unions:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							type MyBool = true | false;
+
+							type WindowStates = "open" | "closed" | "minimized";
+							type LockStates = "locked" | "unlocked";
+							type PositiveOddNumbersUnderTen = 1 | 3 | 5 | 7 | 9;
+
+							function getLength(obj: string | string[]) { 
+								return obj.length;	
+							}
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<p>Generics:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							type StringArray = Array<string>;
+							type NumberArray = Array<number>;
+							type ObjectWithNameArray = Array<{ name: string }>;
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section data-auto-animate>
+						<h2 data-id="code-title" style="color: rgb(207, 224, 58);">Structural Type System</h2>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+								interface Point {
+									x: number;
+									y: number;
+								}
+								function logPoint(p: Point) {
+									console.log(`${p.x}, ${p.y}`);	
+								}
+								// logs "12, 26"
+								const point = { x: 12, y: 26 };
+								logPoint(point);
+						</code></pre>
+					</section>
+
+					<section data-auto-animate>
+						<p>There is no difference between how classes and objects conform to shapes:</p>
+						<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+							class VirtualPoint {
+								x: number;
+								y: number;
+								
+								constructor(x: number, y: number) {
+									this.x = x;
+									this.y = y;
+								}
+							}
+								
+							const newVPoint = new VirtualPoint(13, 56);
+							logPoint(newVPoint); // logs "13, 56"
+						</code></pre>
+					</section>
+
+
+				</section>
+				
+
+				<section id="fragments">
+						<h2 style="color: rgb(207, 224, 58);">Advantages of TS over JS</h2>
+						<p class="fragment">• Static typing (a remedy against TypeError)</p>
+						<p class="fragment">• Improved OOP</p>
+						<p class="fragment">• Better support in IDE (IntelliSense)</p>
+						<p class="fragment">• Access to all new features ECMAScript standard</p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+				</section>
+
+				<section id="fragments">
+						<h2 style="color: rgb(207, 224, 58);">When to use TypeScript?</h2>
+						<p class="fragment">• Large web applications (industrial development)</p>
+						<p class="fragment">• Have knowledge of programming languages static typing</p>
+						<p class="fragment">• Almost always instead of JS</p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+				</section>
+				<section>
+					<h2 style="color: rgb(75, 174, 45);">Thank you for watching</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
